@@ -1,0 +1,35 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.gestor_contrasea">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/icono_aplicacion_pass"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/icono_aplicacion_pass"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.GestorContraseña"
+        tools:targetApi="31">
+
+        <!-- Actividades definidas aquí -->
+        <activity android:name="ui.Login"/>
+        <activity android:name="ui.Registro"/>
+        <activity android:name="ui.PerfilUsuario"/>
+        <activity android:name="Activities.CrearUsuario"/>
+        <activity android:name="Activities.EliminarUsuario"/>
+        <activity android:name="Activities.MenuUsuario"/>
+        <activity android:name="Activities.EditarUsuario"/>
+
+        <activity
+            android:name="Activities.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

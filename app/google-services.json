@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "371785924985",
+    "firebase_url": "https://gestorcontra-b552c-default-rtdb.firebaseio.com",
+    "project_id": "gestorcontra-b552c",
+    "storage_bucket": "gestorcontra-b552c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371785924985:android:fff7d6a9c61c58939e6fa8",
+        "android_client_info": {
+          "package_name": "com.example.gestor_contrasea"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFkq02cCU_T6L9ahy4oL4RiTgH3aSWn2I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
