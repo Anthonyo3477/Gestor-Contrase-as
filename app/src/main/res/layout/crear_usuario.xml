@@ -20,8 +20,8 @@
             android:id="@+id/txtTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Crear Usuario"
-            android:textSize="24sp"
+            android:text="Ingrese Su Aplicacion o Pagina Web"
+            android:textSize="23sp"
             android:textColor="#000000"
             android:paddingBottom="16dp"
             android:layout_gravity="center"/>

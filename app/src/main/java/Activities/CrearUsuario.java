@@ -3,10 +3,8 @@ package Activities;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,7 +16,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import modules.User;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CrearUsuario extends AppCompatActivity {
 
@@ -34,8 +33,7 @@ public class CrearUsuario extends AppCompatActivity {
 
         // Inicializar Firebase Auth y Database
         mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("user"); // Nodo donde se almacenarán los datos
+        databaseReference = FirebaseDatabase.getInstance().getReference("usuarios");
 
         // Referencias a los elementos de la interfaz
         btnCrear = findViewById(R.id.btnCrearAppWeb);
@@ -54,15 +52,15 @@ public class CrearUsuario extends AppCompatActivity {
             String contraseña = txtContraseña.getText().toString();
             String confirmarContraseña = txtConfirmarContraseña.getText().toString();
 
-            guardarUsuario(nombreApp, nombreUsuario, correo, contraseña, confirmarContraseña);
+            guardarAplicacion(nombreApp, nombreUsuario, correo, contraseña, confirmarContraseña);
         });
 
         // Evento del botón Volver
-        btnVolver.setOnClickListener(view -> volver());
+        btnVolver.setOnClickListener(view -> finish());
     }
 
-    // Método para validar los datos y registrar al usuario
-    private void guardarUsuario(String nombreApp, String nombreUsuario, String correo, String contraseña, String confirmarContraseña) {
+    // Método para validar los datos y guardar una nueva aplicación
+    private void guardarAplicacion(String nombreApp, String nombreUsuario, String correo, String contraseña, String confirmarContraseña) {
         if (TextUtils.isEmpty(nombreUsuario) || TextUtils.isEmpty(nombreApp) || TextUtils.isEmpty(correo) || TextUtils.isEmpty(contraseña) || TextUtils.isEmpty(confirmarContraseña)) {
             Toast.makeText(CrearUsuario.this, "Por favor, ingrese todos los datos", Toast.LENGTH_SHORT).show();
             return;
@@ -78,48 +76,47 @@ public class CrearUsuario extends AppCompatActivity {
             return;
         }
 
-        registrarUsuario(correo, contraseña, nombreUsuario, nombreApp);
+        guardarDatosEnBaseDeDatos(nombreApp, nombreUsuario);
     }
 
-    // Método para crear un usuario en Firebase Authentication
-    private void registrarUsuario(String correo, String contraseña, String nombreUsuario, String nombreApp) {
-        mAuth.createUserWithEmailAndPassword(correo, contraseña)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        guardarDatos(user, nombreUsuario, nombreApp);
-                    } else {
-                        Toast.makeText(CrearUsuario.this, "Error al crear usuario: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    // Método para guardar datos adicionales en la base de datos de Firebase
-    private void guardarDatos(FirebaseUser user, String nombreUsuario, String nombreApp) {
+    // Guardar los datos en Firebase Database bajo el nodo del usuario autenticado
+    private void guardarDatosEnBaseDeDatos(String nombreApp, String nombreUsuario) {
+        FirebaseUser user = mAuth.getCurrentUser();
         if (user == null) {
-            Toast.makeText(CrearUsuario.this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CrearUsuario.this, "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String userId = user.getUid();
-        User usuario = new User( user ,nombreUsuario, nombreApp); // Asegúrate de que esta clase tenga un constructor adecuado
+        String appId = databaseReference.child(userId).child("aplicaciones").push().getKey(); // Generar un ID único para la app
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("usuarios");
+        if (appId == null) {
+            Toast.makeText(CrearUsuario.this, "Error al generar ID de la aplicación", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // Guardar los datos en Firebase Database
-        databaseReference.child(userId).setValue(usuario)
+        Map<String, Object> appData = new HashMap<>();
+        appData.put("nombreApp", nombreApp);
+        appData.put("nombreUsuario", nombreUsuario);
+
+        // Guardar bajo el nodo "aplicaciones" del usuario
+        databaseReference.child(userId).child("aplicaciones").child(appId).setValue(appData)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(CrearUsuario.this, "Registro Exitoso", Toast.LENGTH_SHORT).show();
-                    volver();
+                    Toast.makeText(CrearUsuario.this, "Aplicación registrada exitosamente", Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(CrearUsuario.this, "Error al guardar los datos: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("FirebaseError", "Error al guardar sus datos", e);
+                    Log.e("FirebaseError", "Error al guardar datos de la aplicación", e);
                 });
     }
 
-    // Método para regresar a la pantalla anterior
-    private void volver() {
-        finish();
+    // Limpiar los campos después de registrar
+    private void limpiarCampos() {
+        txtNombreSitio.setText("");
+        txtNombreUsuario.setText("");
+        txtCorreo.setText("");
+        txtContraseña.setText("");
+        txtConfirmarContraseña.setText("");
     }
 }
