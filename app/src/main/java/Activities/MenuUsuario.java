@@ -20,7 +20,7 @@ public class MenuUsuario extends AppCompatActivity {
         setContentView(R.layout.menu_usuario);  // Establecer el layout de esta actividad
 
         // Inicializa los botones mediante findViewById
-        btnCrearUsuario = findViewById(R.id.CrearUsuario);
+        btnCrearUsuario = findViewById(R.id.CrearAplicacion);
         btnEditarUsuario = findViewById(R.id.EditarUsuario);
         btnEliminarUsuario = findViewById(R.id.EliminarUsuario);
 

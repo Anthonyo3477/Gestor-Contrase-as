@@ -29,11 +29,11 @@
 
         <!-- Botón para Crear Usuario -->
         <Button
-            android:id="@+id/CrearUsuario"
+            android:id="@+id/CrearAplicacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Crear Usuario"
+            android:text="Ingrese Su Aplicacion"
             android:backgroundTint="#6200EE"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />

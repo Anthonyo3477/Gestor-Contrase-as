@@ -38,7 +38,7 @@ public class CrearUsuario extends AppCompatActivity {
         databaseReference = database.getReference("user"); // Nodo donde se almacenarán los datos
 
         // Referencias a los elementos de la interfaz
-        btnCrear = findViewById(R.id.btnCrear);
+        btnCrear = findViewById(R.id.btnCrearAppWeb);
         btnVolver = findViewById(R.id.btnVolver);
         txtNombreSitio = findViewById(R.id.txtNombreSitio);
         txtNombreUsuario = findViewById(R.id.txtNombreUsuario);

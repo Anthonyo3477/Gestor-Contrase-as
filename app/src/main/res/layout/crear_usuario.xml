@@ -139,10 +139,10 @@
 
         <!-- Botón de registro -->
         <Button
-            android:id="@+id/btnCrear"
+            android:id="@+id/btnCrearAppWeb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Registrarse"
+            android:text="Registrar Aplicacion o Pagina Web"
             android:layout_marginTop="10px"
             android:textSize="18sp"
             android:backgroundTint="#6200EE"
