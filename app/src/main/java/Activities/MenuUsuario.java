@@ -37,7 +37,6 @@ public class MenuUsuario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_usuario);
-        recyclerView = findViewById(R.id.recyclerViewUsuarios);
 
         // Inicializar elementos de la vista
         btnCrearUsuario = findViewById(R.id.CrearAplicacion);
@@ -47,10 +46,9 @@ public class MenuUsuario extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         usuarioAdapter = new UsuarioAdapter(this, listaUsuarios);
         recyclerView.setAdapter(usuarioAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Referencia a Firebase
-        databaseReference = FirebaseDatabase.getInstance().getReference("aplicaciones");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Aplicaciones");
 
         // Cargar datos de Firebase
         cargarDatosUsuario();
@@ -90,4 +88,5 @@ public class MenuUsuario extends AppCompatActivity {
             }
         });
     }
+
 }

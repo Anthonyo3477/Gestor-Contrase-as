@@ -17,13 +17,13 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/txtNombreApp"
+            android:id="@+id/txtNombreWeb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre de la App"
-            android:textSize="18sp"
-            android:textColor="#000000"
-            android:fontFamily="sans-serif-medium" />
+            android:text="Nombre de App o Web"
+            android:textSize="16sp"
+            android:textColor="#666666"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/txtNombreUsuario"
@@ -35,7 +35,7 @@
             android:layout_marginTop="4dp" />
 
         <TextView
-            android:id="@+id/txtNombreCorreo"
+            android:id="@+id/txtCorreo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Correo"
@@ -52,7 +52,6 @@
             android:textColor="#666666"
             android:layout_marginTop="2dp" />
 
-        <!-- Contenedor para los botones alineados a la derecha -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,26 +59,26 @@
             android:gravity="end"
             android:layout_marginTop="8dp">
 
-        <Button
-            android:id="@+id/EditarUsuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="#6200EE"
-            android:text="Editar"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            <Button
+                android:id="@+id/EditarUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="#6200EE"
+                android:text="Editar"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/EliminarUsuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#6200EE"
-            android:text="Eliminar"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            <Button
+                android:id="@+id/EliminarUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#6200EE"
+                android:text="Eliminar"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+</com.google.android.material.card.MaterialCardView>

@@ -11,54 +11,48 @@ import com.example.gestor_contrasea.R;
 import java.util.List;
 import modules.User;
 
-public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.ViewHolder> {
+public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UsuarioViewHolder> {
 
     private Context context;
-    private List<User> listaUsuarios;
+    private List<User> usuarios;
 
-    // Constructor para inicializar el contexto y la lista de usuarios
-    public UsuarioAdapter(Context context, List<User> listaUsuarios) {
+    public UsuarioAdapter(Context context, List<User> usuarios) {
         this.context = context;
-        this.listaUsuarios = listaUsuarios;
+        this.usuarios = usuarios;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflar el diseño de cada elemento (card_usuario.xml)
+    public UsuarioViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.card_usuario, parent, false);
-        return new ViewHolder(view);
+        return new UsuarioViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Obtener el usuario de la posición actual
-        User usuario = listaUsuarios.get(position);
+    public void onBindViewHolder(@NonNull UsuarioViewHolder holder, int position) {
+        User usuario = usuarios.get(position);
 
-        // Asignar datos a las vistas del ViewHolder
-        holder.txtNombreUsuario.setText(usuario.getNombreUsuario());
-        holder.txtNombreApp.setText(usuario.getNombreWeb());
-        holder.txtCorreo.setText(usuario.getCorreo());
-        holder.txtContraseña.setText(usuario.getContraseña());
+        // Asignar valores del modelo User a los campos de la tarjeta
+        holder.nombreWeb.setText(usuario.getNombreWeb());
+        holder.nombreUsuario.setText(usuario.getNombreUsuario());
+        holder.correo.setText(usuario.getCorreo());
+        holder.contraseña.setText(usuario.getContraseña());
     }
 
     @Override
     public int getItemCount() {
-        return listaUsuarios.size(); // Devuelve el tamaño de la lista de usuarios
+        return usuarios.size();
     }
 
-    // Clase ViewHolder que representa cada elemento visual
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtNombreApp, txtNombreUsuario, txtCorreo, txtContraseña;
+    public static class UsuarioViewHolder extends RecyclerView.ViewHolder {
+        TextView nombreWeb, nombreUsuario, correo, contraseña;
 
-        public ViewHolder(@NonNull View itemView) {
+        public UsuarioViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            // Inicializar las vistas del diseño card_usuario.xml
-            txtNombreApp = itemView.findViewById(R.id.txtNombreApp);
-            txtNombreUsuario = itemView.findViewById(R.id.txtNombreUsuario);
-            txtCorreo = itemView.findViewById(R.id.txtNombreCorreo);
-            txtContraseña = itemView.findViewById(R.id.txtContraseña);
+            nombreWeb = itemView.findViewById(R.id.txtNombreWeb);
+            nombreUsuario = itemView.findViewById(R.id.txtNombreUsuario);
+            correo = itemView.findViewById(R.id.txtCorreo);
+            contraseña = itemView.findViewById(R.id.txtContraseña);
         }
     }
 }

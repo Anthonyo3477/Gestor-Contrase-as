@@ -21,7 +21,6 @@ import java.util.Map;
 
 public class CrearUsuario extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
     private Button btnCrear, btnVolver;
     private EditText txtNombreSitio, txtNombreUsuario, txtCorreo, txtContraseña, txtConfirmarContraseña;
@@ -31,9 +30,9 @@ public class CrearUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crear_usuario);
 
-        // Inicializar Firebase Auth y Database
-        mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("usuarios");
+        // Inicializar Firebase Database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("Aplicaciones"); // Nodo raíz
 
         // Referencias a los elementos de la interfaz
         btnCrear = findViewById(R.id.btnCrearAppWeb);
@@ -79,16 +78,9 @@ public class CrearUsuario extends AppCompatActivity {
         guardarDatosEnBaseDeDatos(nombreApp, nombreUsuario, correo, contraseña);
     }
 
-    // Guardar los datos en Firebase Database bajo el nodo del usuario autenticado
+    // Guardar los datos en Firebase Database directamente bajo el nodo raíz
     private void guardarDatosEnBaseDeDatos(String nombreApp, String nombreUsuario, String correo, String contraseña) {
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user == null) {
-            Toast.makeText(CrearUsuario.this, "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String userId = user.getUid();
-        String appId = databaseReference.child(userId).child("aplicaciones").push().getKey(); // Generar un ID único para la app
+        String appId = databaseReference.push().getKey(); // Generar un ID único para la app
 
         if (appId == null) {
             Toast.makeText(CrearUsuario.this, "Error al generar ID de la aplicación", Toast.LENGTH_SHORT).show();
@@ -101,8 +93,8 @@ public class CrearUsuario extends AppCompatActivity {
         appData.put("correo", correo);  // Agregar el correo
         appData.put("contraseña", contraseña);  // Agregar la contraseña
 
-        // Guardar bajo el nodo "aplicaciones" del usuario
-        databaseReference.child(userId).child("aplicaciones").child(appId).setValue(appData)
+        // Guardar directamente bajo el nodo raíz "Aplicaciones"
+        databaseReference.child(appId).setValue(appData)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(CrearUsuario.this, "Aplicación registrada exitosamente", Toast.LENGTH_SHORT).show();
                     limpiarCampos();
