@@ -76,11 +76,11 @@ public class CrearUsuario extends AppCompatActivity {
             return;
         }
 
-        guardarDatosEnBaseDeDatos(nombreApp, nombreUsuario);
+        guardarDatosEnBaseDeDatos(nombreApp, nombreUsuario, correo, contraseña);
     }
 
     // Guardar los datos en Firebase Database bajo el nodo del usuario autenticado
-    private void guardarDatosEnBaseDeDatos(String nombreApp, String nombreUsuario) {
+    private void guardarDatosEnBaseDeDatos(String nombreApp, String nombreUsuario, String correo, String contraseña) {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user == null) {
             Toast.makeText(CrearUsuario.this, "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show();
@@ -98,6 +98,8 @@ public class CrearUsuario extends AppCompatActivity {
         Map<String, Object> appData = new HashMap<>();
         appData.put("nombreApp", nombreApp);
         appData.put("nombreUsuario", nombreUsuario);
+        appData.put("correo", correo);  // Agregar el correo
+        appData.put("contraseña", contraseña);  // Agregar la contraseña
 
         // Guardar bajo el nodo "aplicaciones" del usuario
         databaseReference.child(userId).child("aplicaciones").child(appId).setValue(appData)

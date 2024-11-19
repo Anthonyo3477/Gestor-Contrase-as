@@ -9,12 +9,15 @@ public class User {
     private String correo;
     private String Contraseña;
 
+    public User() {
+    }
+
     public User(FirebaseUser user, String nombreUsuario, String nombreApp) {
 
     }
 
     public User(String contraseña, String correo, String nombreUsuario, String nombreWeb) {
-        Contraseña = contraseña;
+        this.Contraseña = contraseña;
         this.correo = correo;
         this.nombreUsuario = nombreUsuario;
         this.nombreWeb = nombreWeb;

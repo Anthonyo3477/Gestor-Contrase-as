@@ -1,114 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".MainActivity">
+    android:background="#FFFFFF">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:gravity="center_horizontal"
+    <!-- Título -->
+    <TextView
+        android:id="@+id/txtTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="Gestión de Usuarios"
+        android:textColor="#000000"
+        android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Título dentro del LinearLayout -->
-        <TextView
-            android:id="@+id/txtTitulo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:gravity="center"
-            android:text="Gestión de Usuarios"
-            android:textColor="#000000"
-            android:textSize="24sp" />
+    <!-- Botón para Crear Usuario -->
+    <Button
+        android:id="@+id/CrearAplicacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Ingrese Su Aplicación"
+        android:backgroundTint="#6200EE"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/txtTitulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Botón para Crear Usuario -->
-        <Button
-            android:id="@+id/CrearAplicacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="Ingrese Su Aplicacion"
-            android:backgroundTint="#6200EE"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-
-        <!-- CardView para mostrar un Usuario (Ejemplo: Youtube) -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/CardUsuario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:gravity="start">
-
-                <!-- Nombre de la aplicación -->
-                <TextView
-                    android:id="@+id/txtNombreApp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Youtube"
-                    android:textColor="#000000"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:id="@+id/txtNombreUsuario"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Usuario"
-                    android:textColor="#000000"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:id="@+id/txtNombreCorreo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Correo"
-                    android:textColor="#000000"
-                    android:textSize="25sp" />
-
-                <!-- Botones Editar y Eliminar dentro de la CardView, alineados a la derecha -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="end|bottom"
-                    android:paddingTop="16dp">
-
-                    <Button
-                        android:id="@+id/EditarUsuario"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Editar"
-                        android:backgroundTint="#6200EE"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:layout_marginEnd="16dp"/>
-
-                    <Button
-                        android:id="@+id/EliminarUsuario"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Eliminar"
-                        android:backgroundTint="#6200EE"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"/>
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-    </LinearLayout>
+    <!-- RecyclerView para mostrar las tarjetas de usuarios -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewUsuarios"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/CrearAplicacion"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
