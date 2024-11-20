@@ -1,113 +1,113 @@
 package Activities;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gestor_contrasea.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import modules.User;
 
 public class EditarUsuario extends AppCompatActivity {
 
-    private EditText txtNombreSitio, txtNombreUsuario, txtCorreo, txtContrasena;
-    private Button btnEditar, btnVolver;
+    private EditText txtNombreWeb, txtNombreUsuario, txtCorreo, txtContraseña, txtConfirmarContraseña;
+    private Button btnGuardarCambios, btnCancelar;
     private DatabaseReference databaseReference;
-    private String usuarioId;  // Almacenar el ID del usuario para editar
+    private String usuarioId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.editar_usuario);  // Asegúrate de que coincida con el archivo de diseño XML
+        setContentView(R.layout.editar_usuario);
 
-        // Inicializar vistas
-        txtNombreSitio = findViewById(R.id.txtNombreSitio);
+        // Referencias de los elementos de la vista
+        txtNombreWeb = findViewById(R.id.txtNombreSitio);
         txtNombreUsuario = findViewById(R.id.txtNombreUsuario);
         txtCorreo = findViewById(R.id.txtCorreo);
-        txtContrasena = findViewById(R.id.txtContrasena);
-        btnEditar = findViewById(R.id.btnEditar);
-        btnVolver = findViewById(R.id.btnVolver);
+        txtContraseña = findViewById(R.id.txtContraseña);
+        txtConfirmarContraseña = findViewById(R.id.txtConfirmarContraseña);
+        btnGuardarCambios = findViewById(R.id.btnEditar);
+        btnCancelar = findViewById(R.id.btnVolver);
 
-        // Referencia de Firebase
-        databaseReference = FirebaseDatabase.getInstance().getReference("usuarios");
+        // Inicializar Firebase
+        databaseReference = FirebaseDatabase.getInstance().getReference("credenciales");
 
-        // Configurar listeners de botones
-        btnEditar.setOnClickListener(view -> buscarUsuarioPorCorreo(txtCorreo.getText().toString().trim()));
-        btnVolver.setOnClickListener(view -> guardarCambios());
+        // Obtener datos del intent
+        usuarioId = getIntent().getStringExtra("usuarioId");
+        String nombreWeb = getIntent().getStringExtra("nombreWeb");
+        String nombreUsuario = getIntent().getStringExtra("nombreUsuario");
+        String correo = getIntent().getStringExtra("correo");
+        String contraseña = getIntent().getStringExtra("contraseña");
+
+        Log.d("EditarUsuario", "Datos recibidos: usuarioId=" + usuarioId +
+                ", nombreWeb=" + nombreWeb +
+                ", nombreUsuario=" + nombreUsuario +
+                ", correo=" + correo +
+                ", contraseña=" + contraseña);
+
+        // Cargar datos en los campos (manejar nulos)
+        txtNombreWeb.setText(nombreWeb != null ? nombreWeb : "");
+        txtNombreUsuario.setText(nombreUsuario != null ? nombreUsuario : "");
+        txtCorreo.setText(correo != null ? correo : "");
+        txtContraseña.setText(contraseña != null ? contraseña : "");
+
+        // Configurar botón Guardar Cambios
+        btnGuardarCambios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actualizarUsuario();
+            }
+        });
+
+        // Configurar botón Cancelar
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish(); // Cierra la actividad actual
+            }
+        });
     }
 
-    // Obtener datos del usuario basado en el correo y poblar campos
-    private void buscarUsuarioPorCorreo(String correo) {
-        if (!correo.isEmpty()) {
-            Query query = databaseReference.orderByChild("mail").equalTo(correo);
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        for (DataSnapshot usuarioSnapshot : dataSnapshot.getChildren()) {
-                            User usuario = usuarioSnapshot.getValue(User.class);
-                            if (usuario != null) {
+    // Método para actualizar el usuario en Firebase
+    private void actualizarUsuario() {
+        String nombreWeb = txtNombreWeb.getText().toString().trim();
+        String nombreUsuario = txtNombreUsuario.getText().toString().trim();
+        String correo = txtCorreo.getText().toString().trim();
+        String contraseña = txtContraseña.getText().toString().trim();
+        String confirmarContraseña = txtConfirmarContraseña.getText().toString().trim();
 
-                                usuarioId = usuarioSnapshot.getKey();  // Guardar ID para editar
-                                txtNombreSitio.setText(usuario.getNombreWeb());
-                                txtNombreUsuario.setText(usuario.getNombreUsuario());
-                                txtCorreo.setText(usuario.getCorreo());
-                                txtContrasena.setText(usuario.getContraseña());  // Solo si el campo de contraseña es visible
-                            }
-                        }
-                    } else {
-                        Toast.makeText(EditarUsuario.this, "Usuario no encontrado.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(EditarUsuario.this, "Error al buscar usuario.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            Toast.makeText(this, "Ingrese un correo para buscar.", Toast.LENGTH_SHORT).show();
+        // Validar campos
+        if (TextUtils.isEmpty(nombreWeb) || TextUtils.isEmpty(nombreUsuario) ||
+                TextUtils.isEmpty(correo) || TextUtils.isEmpty(contraseña) || TextUtils.isEmpty(confirmarContraseña)) {
+            Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
+            return;
         }
-    }
 
-    // Actualizar datos del usuario en Firebase
-    private void guardarCambios() {
-        if (usuarioId != null) {
-            String nombreSitio = txtNombreSitio.getText().toString().trim();
-            String nombreUsuario = txtNombreUsuario.getText().toString().trim();
-            String correo = txtCorreo.getText().toString().trim();
-            String contrasena = txtContrasena.getText().toString().trim();
-
-            // Preparar datos para actualizar
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("nombreSitio", nombreSitio);
-            updates.put("userName", nombreUsuario);
-            updates.put("mail", correo);
-            updates.put("password", contrasena);  // Almacenar contraseña de forma segura si es necesario
-
-            // Actualizar en Firebase
-            databaseReference.child(usuarioId).updateChildren(updates).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    Toast.makeText(EditarUsuario.this, "Usuario actualizado correctamente.", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(EditarUsuario.this, "Error al actualizar usuario.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            Toast.makeText(this, "Primero busque un usuario para editar.", Toast.LENGTH_SHORT).show();
+        if (!contraseña.equals(confirmarContraseña)) {
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        // Crear un objeto actualizado
+        User usuarioActualizado = new User(usuarioId, nombreWeb, nombreUsuario, correo, contraseña, confirmarContraseña);
+
+        // Actualizar en Firebase
+        databaseReference.child(usuarioId).setValue(usuarioActualizado)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(EditarUsuario.this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
+                    finish(); // Cierra la actividad actual
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(EditarUsuario.this, "Error al actualizar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("EditarUsuario", "Error al actualizar: ", e);
+                });
     }
 }

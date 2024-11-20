@@ -74,6 +74,8 @@ public class MenuUsuario extends AppCompatActivity {
                         if (usuario != null) {
                             listaUsuarios.add(usuario);
                             Log.d("MenuUsuario", "Usuario añadido: " + usuario.getNombreUsuario());
+                        } else {
+                            Log.w("MenuUsuario", "Usuario nulo en nodo actual.");
                         }
                     }
                     usuarioAdapter.notifyDataSetChanged(); // Notifica al adaptador
@@ -88,5 +90,4 @@ public class MenuUsuario extends AppCompatActivity {
             }
         });
     }
-
 }

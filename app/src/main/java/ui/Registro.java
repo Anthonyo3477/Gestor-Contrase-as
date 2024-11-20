@@ -108,7 +108,7 @@ public class Registro extends AppCompatActivity {
 
         String id = user.getUid();
         // Ahora, no pasamos la contraseña en la creación de la clase User
-        User credentials = new User(pass, email,"" ,"" );
+        User credentials = new User("", pass, email,"" ,"", "" );
 
         // Guardamos los datos en la base de datos de Firebase
         databaseReference.child(id).setValue(credentials).addOnSuccessListener(aVoid -> {

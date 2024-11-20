@@ -1,42 +1,50 @@
 package modules;
 
-import com.google.firebase.auth.FirebaseUser;
-
 public class User {
-
-    private String nombreWeb;
+    private String id; // Identificador único
+    private String nombreApp;
     private String nombreUsuario;
     private String correo;
-    private String Contraseña;
+    private String contraseña;
+    private String confirmarContraseña; // Nuevo campo
 
+    // Constructor vacío requerido por Firebase
     public User() {
     }
 
-    public User(FirebaseUser user, String nombreUsuario, String nombreApp) {
-
-    }
-
-    public User(String contraseña, String correo, String nombreUsuario, String nombreWeb) {
-        this.Contraseña = contraseña;
-        this.correo = correo;
+    // Constructor con todos los campos
+    public User(String id, String nombreApp, String nombreUsuario, String correo, String contraseña, String confirmarContraseña) {
+        this.id = id;
+        this.nombreApp = nombreApp;
         this.nombreUsuario = nombreUsuario;
-        this.nombreWeb = nombreWeb;
+        this.correo = correo;
+        this.contraseña = contraseña;
+        this.confirmarContraseña = confirmarContraseña;
+
     }
 
-    public String getNombreWeb() {
-        return nombreWeb;
+    public String getId() {
+        return id;
     }
 
-    public void setNombreWeb(String nombreWeb) {
-        this.nombreWeb = nombreWeb;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getConfirmarContraseña() {
+        return confirmarContraseña;
+    }
+
+    public void setConfirmarContraseña(String confirmarContraseña) {
+        this.confirmarContraseña = confirmarContraseña;
     }
 
     public String getContraseña() {
-        return Contraseña;
+        return contraseña;
     }
 
     public void setContraseña(String contraseña) {
-        Contraseña = contraseña;
+        this.contraseña = contraseña;
     }
 
     public String getCorreo() {
@@ -55,13 +63,23 @@ public class User {
         this.nombreUsuario = nombreUsuario;
     }
 
+    public String getNombreApp() {
+        return nombreApp;
+    }
+
+    public void setNombreApp(String nombreApp) {
+        this.nombreApp = nombreApp;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "nombreWeb='" + nombreWeb + '\'' +
+                "id='" + id + '\'' +
+                ", nombreApp='" + nombreApp + '\'' +
                 ", nombreUsuario='" + nombreUsuario + '\'' +
                 ", correo='" + correo + '\'' +
-                ", Contraseña='" + Contraseña + '\'' +
+                ", contraseña='" + contraseña + '\'' +
+                ", confirmarContraseña='" + confirmarContraseña + '\'' +
                 '}';
     }
 }

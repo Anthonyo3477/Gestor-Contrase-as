@@ -20,7 +20,7 @@
             android:id="@+id/txtTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edite Sus Datos"
+            android:text="Edite Los datos de su pagina"
             android:textSize="24sp"
             android:textColor="#000000"
             android:paddingBottom="16dp"
@@ -104,20 +104,20 @@
             android:textColor="#333333"
             android:textSize="16sp" />
 
+        <!-- Texto y campo para confirmar la contraseña -->
         <EditText
-            android:id="@+id/txtContrasena"
+            android:id="@+id/txtContraseña"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ingrese su contraseña"
             android:layout_marginTop="5px"
-            android:inputType="textPassword"
             android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            android:backgroundTint="#CCCCCC"/>
+            android:backgroundTint="#CCCCCC"
+            android:hint="Ingrese su contraseña"
+            android:inputType="textPassword"
+            android:padding="8dp" />
 
-        <!-- Texto y campo para confirmar la contraseña -->
         <TextView
-            android:id="@+id/LabelConfirmarContrasena"
+            android:id="@+id/LabelConfirmarContraseña"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Confirmar Contraseña"
@@ -127,7 +127,7 @@
             android:layout_marginBottom="8dp"/>
 
         <EditText
-            android:id="@+id/txtConfirmarContrasena"
+            android:id="@+id/txtConfirmarContraseña"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Confirme su contraseña"
@@ -142,7 +142,7 @@
             android:id="@+id/btnEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Editar"
+            android:text="Editar Sus datos"
             android:layout_marginTop="10px"
             android:textSize="18sp"
             android:backgroundTint="#6200EE"
