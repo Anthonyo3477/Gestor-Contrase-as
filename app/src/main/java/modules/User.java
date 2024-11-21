@@ -1,66 +1,31 @@
 package modules;
 
 public class User {
-    private String id; // Identificador único
+    private String appId;
     private String nombreApp;
     private String nombreUsuario;
     private String correo;
     private String contraseña;
-    private String confirmarContraseña; // Nuevo campo
 
     // Constructor vacío requerido por Firebase
-    public User() {
-    }
+    public User() {}
 
-    // Constructor con todos los campos
-    public User(String id, String nombreApp, String nombreUsuario, String correo, String contraseña, String confirmarContraseña) {
-        this.id = id;
+    // Constructor con parámetros
+    public User(String appId, String nombreApp, String nombreUsuario, String correo, String contraseña) {
+        this.appId = appId;
         this.nombreApp = nombreApp;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
         this.contraseña = contraseña;
-        this.confirmarContraseña = confirmarContraseña;
-
     }
 
-    public String getId() {
-        return id;
+    // Getters y setters
+    public String getAppId() {
+        return appId;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getConfirmarContraseña() {
-        return confirmarContraseña;
-    }
-
-    public void setConfirmarContraseña(String confirmarContraseña) {
-        this.confirmarContraseña = confirmarContraseña;
-    }
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 
     public String getNombreApp() {
@@ -71,15 +36,38 @@ public class User {
         this.nombreApp = nombreApp;
     }
 
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id='" + id + '\'' +
+                "appId='" + appId + '\'' +
                 ", nombreApp='" + nombreApp + '\'' +
                 ", nombreUsuario='" + nombreUsuario + '\'' +
                 ", correo='" + correo + '\'' +
                 ", contraseña='" + contraseña + '\'' +
-                ", confirmarContraseña='" + confirmarContraseña + '\'' +
                 '}';
     }
 }

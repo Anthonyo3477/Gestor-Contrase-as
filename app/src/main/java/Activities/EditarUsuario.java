@@ -3,7 +3,6 @@ package Activities;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,7 +20,7 @@ public class EditarUsuario extends AppCompatActivity {
     private EditText txtNombreWeb, txtNombreUsuario, txtCorreo, txtContraseña, txtConfirmarContraseña;
     private Button btnGuardarCambios, btnCancelar;
     private DatabaseReference databaseReference;
-    private String usuarioId;
+    private String appId; // ID único del usuario en Firebase
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,54 +37,50 @@ public class EditarUsuario extends AppCompatActivity {
         btnCancelar = findViewById(R.id.btnVolver);
 
         // Inicializar Firebase
-        databaseReference = FirebaseDatabase.getInstance().getReference("credenciales");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Aplicaciones");
 
-        // Obtener datos del intent
-        usuarioId = getIntent().getStringExtra("usuarioId");
-        String nombreWeb = getIntent().getStringExtra("nombreWeb");
+        // Obtener datos del Intent
+        appId = getIntent().getStringExtra("appId");
+        String nombreApp = getIntent().getStringExtra("nombreApp");
         String nombreUsuario = getIntent().getStringExtra("nombreUsuario");
         String correo = getIntent().getStringExtra("correo");
         String contraseña = getIntent().getStringExtra("contraseña");
 
-        Log.d("EditarUsuario", "Datos recibidos: usuarioId=" + usuarioId +
-                ", nombreWeb=" + nombreWeb +
+        Log.d("EditarUsuario", "Datos recibidos: appId=" + appId +
+                ", nombreApp=" + nombreApp +
                 ", nombreUsuario=" + nombreUsuario +
                 ", correo=" + correo +
                 ", contraseña=" + contraseña);
 
         // Cargar datos en los campos (manejar nulos)
-        txtNombreWeb.setText(nombreWeb != null ? nombreWeb : "");
+        txtNombreWeb.setText(nombreApp != null ? nombreApp : "");
         txtNombreUsuario.setText(nombreUsuario != null ? nombreUsuario : "");
         txtCorreo.setText(correo != null ? correo : "");
         txtContraseña.setText(contraseña != null ? contraseña : "");
 
         // Configurar botón Guardar Cambios
-        btnGuardarCambios.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                actualizarUsuario();
-            }
-        });
+        btnGuardarCambios.setOnClickListener(v -> actualizarUsuario());
 
         // Configurar botón Cancelar
-        btnCancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish(); // Cierra la actividad actual
-            }
-        });
+        btnCancelar.setOnClickListener(v -> finish()); // Cierra la actividad actual
     }
 
     // Método para actualizar el usuario en Firebase
     private void actualizarUsuario() {
-        String nombreWeb = txtNombreWeb.getText().toString().trim();
+        String nombreApp = txtNombreWeb.getText().toString().trim();
         String nombreUsuario = txtNombreUsuario.getText().toString().trim();
         String correo = txtCorreo.getText().toString().trim();
         String contraseña = txtContraseña.getText().toString().trim();
         String confirmarContraseña = txtConfirmarContraseña.getText().toString().trim();
 
-        // Validar campos
-        if (TextUtils.isEmpty(nombreWeb) || TextUtils.isEmpty(nombreUsuario) ||
+        Log.d("EditarUsuario", "Datos capturados: " +
+                "nombreApp=" + nombreApp +
+                ", nombreUsuario=" + nombreUsuario +
+                ", correo=" + correo +
+                ", contraseña=" + contraseña +
+                ", confirmarContraseña=" + confirmarContraseña);
+
+        if (TextUtils.isEmpty(nombreApp) || TextUtils.isEmpty(nombreUsuario) ||
                 TextUtils.isEmpty(correo) || TextUtils.isEmpty(contraseña) || TextUtils.isEmpty(confirmarContraseña)) {
             Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             return;
@@ -96,18 +91,19 @@ public class EditarUsuario extends AppCompatActivity {
             return;
         }
 
-        // Crear un objeto actualizado
-        User usuarioActualizado = new User(usuarioId, nombreWeb, nombreUsuario, correo, contraseña, confirmarContraseña);
+        User usuarioActualizado = new User(appId, nombreApp, nombreUsuario, correo, contraseña);
+        Log.d("EditarUsuario", "Usuario actualizado: " + usuarioActualizado);
 
-        // Actualizar en Firebase
-        databaseReference.child(usuarioId).setValue(usuarioActualizado)
+        databaseReference.child(appId).setValue(usuarioActualizado)
                 .addOnSuccessListener(aVoid -> {
+                    Log.d("EditarUsuario", "Usuario actualizado correctamente en Firebase.");
                     Toast.makeText(EditarUsuario.this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
-                    finish(); // Cierra la actividad actual
+                    finish();
                 })
                 .addOnFailureListener(e -> {
+                    Log.e("EditarUsuario", "Error al actualizar usuario: ", e);
                     Toast.makeText(EditarUsuario.this, "Error al actualizar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("EditarUsuario", "Error al actualizar: ", e);
                 });
     }
+
 }
