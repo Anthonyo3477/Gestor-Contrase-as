@@ -21,7 +21,7 @@ public class CrearUsuario extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private Button btnCrear, btnVolver;
-    private EditText txtNombreSitio, txtNombreUsuario, txtCorreo, txtContraseña, txtConfirmarContraseña;
+    private EditText txtNombreSitio, txtNombreUsuario, txtCorreo, txtContraseña;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +39,6 @@ public class CrearUsuario extends AppCompatActivity {
         txtNombreUsuario = findViewById(R.id.txtNombreUsuario);
         txtCorreo = findViewById(R.id.txtCorreo);
         txtContraseña = findViewById(R.id.txtContraseña);
-        txtConfirmarContraseña = findViewById(R.id.txtConfirmarContraseña);
 
         // Evento del botón Crear
         btnCrear.setOnClickListener(view -> {
@@ -47,9 +46,8 @@ public class CrearUsuario extends AppCompatActivity {
             String nombreUsuario = txtNombreUsuario.getText().toString();
             String correo = txtCorreo.getText().toString();
             String contraseña = txtContraseña.getText().toString();
-            String confirmarContraseña = txtConfirmarContraseña.getText().toString();
 
-            guardarAplicacion(nombreApp, nombreUsuario, correo, contraseña, confirmarContraseña);
+            guardarAplicacion(nombreApp, nombreUsuario, correo, contraseña);
         });
 
         // Evento del botón Volver
@@ -57,8 +55,8 @@ public class CrearUsuario extends AppCompatActivity {
     }
 
     // Método para validar los datos y guardar una nueva aplicación
-    private void guardarAplicacion(String nombreApp, String nombreUsuario, String correo, String contraseña, String confirmarContraseña) {
-        if (TextUtils.isEmpty(nombreUsuario) || TextUtils.isEmpty(nombreApp) || TextUtils.isEmpty(correo) || TextUtils.isEmpty(contraseña) || TextUtils.isEmpty(confirmarContraseña)) {
+    private void guardarAplicacion(String nombreApp, String nombreUsuario, String correo, String contraseña) {
+        if (TextUtils.isEmpty(nombreUsuario) || TextUtils.isEmpty(nombreApp) || TextUtils.isEmpty(correo) || TextUtils.isEmpty(contraseña)) {
             Toast.makeText(CrearUsuario.this, "Por favor, ingrese todos los datos", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -68,8 +66,8 @@ public class CrearUsuario extends AppCompatActivity {
             return;
         }
 
-        if (contraseña.length() < 6 || !contraseña.equals(confirmarContraseña)) {
-            Toast.makeText(CrearUsuario.this, "Las contraseñas no coinciden o son menores a 6 caracteres", Toast.LENGTH_SHORT).show();
+        if (contraseña.length() < 6) {
+            Toast.makeText(CrearUsuario.this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -78,8 +76,7 @@ public class CrearUsuario extends AppCompatActivity {
 
     // Guardar los datos en Firebase Database directamente bajo el nodo raíz
     private void guardarDatosEnBaseDeDatos(String nombreApp, String nombreUsuario, String correo, String contraseña) {
-        // Generar un ID único para la aplicación
-        String appId = databaseReference.push().getKey(); // Generar un ID único para la app
+        String appId = databaseReference.push().getKey();
 
         if (appId == null) {
             Toast.makeText(CrearUsuario.this, "Error al generar ID de la aplicación", Toast.LENGTH_SHORT).show();
@@ -87,17 +84,16 @@ public class CrearUsuario extends AppCompatActivity {
         }
 
         // Encriptar la contraseña
-        String contraseñaEncriptada = Encrypation.encriptarContraseña(contraseña);
-
+        String contraseñaEncriptada = Encrypation.encriptarContraseñaAES(contraseña);
         if (contraseñaEncriptada == null) {
             Toast.makeText(CrearUsuario.this, "Error al encriptar la contraseña", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Crear un objeto User con la contraseña encriptada
+        // Crear un objeto User con los datos
         User nuevoUsuario = new User(appId, nombreApp, nombreUsuario, correo, contraseñaEncriptada);
 
-        // Guardar los datos en Firebase
+        // Guardar el objeto en la base de datos de Firebase
         databaseReference.child(appId).setValue(nuevoUsuario)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(CrearUsuario.this, "Aplicación registrada exitosamente", Toast.LENGTH_SHORT).show();
@@ -115,6 +111,5 @@ public class CrearUsuario extends AppCompatActivity {
         txtNombreUsuario.setText("");
         txtCorreo.setText("");
         txtContraseña.setText("");
-        txtConfirmarContraseña.setText("");
     }
 }

@@ -22,7 +22,7 @@
             android:layout_height="258dp"
             android:layout_marginBottom="20dp"
             android:contentDescription="Logo"
-            android:src="@drawable/Logo" />
+            android:src="@drawable/logo" />
 
         <!-- Título con Material Design -->
         <com.google.android.material.textview.MaterialTextView

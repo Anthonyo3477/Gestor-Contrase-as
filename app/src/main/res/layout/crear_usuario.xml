@@ -135,33 +135,6 @@
                 android:backgroundTint="#CCCCCC"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Texto y campo para confirmar la contraseña -->
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/LabelConfirmarContraseña"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Confirmar Contraseña"
-            android:layout_marginTop="30px"
-            android:textSize="16sp"
-            android:textColor="#333333"
-            android:layout_marginBottom="8dp"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtConfirmarContraseñaLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtConfirmarContraseña"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Confirme su contraseña"
-                android:layout_marginTop="5px"
-                android:inputType="textPassword"
-                android:layout_marginBottom="24dp"
-                android:padding="8dp"
-                android:backgroundTint="#CCCCCC"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
         <!-- Botón de registro -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCrearAppWeb"
@@ -188,3 +161,4 @@
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
