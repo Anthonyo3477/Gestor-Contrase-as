@@ -86,7 +86,7 @@ public class EditarUsuario extends AppCompatActivity {
         }
 
         // Crear un objeto actualizado basado en la clase User
-        User usuarioActualizado = new User(appId, nombreApp, nombreUsuario, correo, contraseña);
+        User usuarioActualizado = new User(appId, nombreApp, nombreUsuario, correo, contraseña );
 
         // Actualizar en Firebase
         databaseReference.child(appId).setValue(usuarioActualizado)
