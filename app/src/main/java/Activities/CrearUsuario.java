@@ -14,9 +14,7 @@ import com.example.gestor_contrasea.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import adapters.Encrypation; // Importar la clase de encriptación
 import modules.User;
 
 public class CrearUsuario extends AppCompatActivity {
@@ -88,8 +86,16 @@ public class CrearUsuario extends AppCompatActivity {
             return;
         }
 
-        // Crear un objeto User con el appId generado
-        User nuevoUsuario = new User(appId, nombreApp, nombreUsuario, correo, contraseña);
+        // Encriptar la contraseña
+        String contraseñaEncriptada = Encrypation.encriptarContraseña(contraseña);
+
+        if (contraseñaEncriptada == null) {
+            Toast.makeText(CrearUsuario.this, "Error al encriptar la contraseña", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Crear un objeto User con la contraseña encriptada
+        User nuevoUsuario = new User(appId, nombreApp, nombreUsuario, correo, contraseñaEncriptada);
 
         // Guardar los datos en Firebase
         databaseReference.child(appId).setValue(nuevoUsuario)
