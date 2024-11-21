@@ -11,13 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gestor_contrasea.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import modules.User;
 
 public class CrearUsuario extends AppCompatActivity {
 
@@ -80,6 +80,7 @@ public class CrearUsuario extends AppCompatActivity {
 
     // Guardar los datos en Firebase Database directamente bajo el nodo raíz
     private void guardarDatosEnBaseDeDatos(String nombreApp, String nombreUsuario, String correo, String contraseña) {
+        // Generar un ID único para la aplicación
         String appId = databaseReference.push().getKey(); // Generar un ID único para la app
 
         if (appId == null) {
@@ -87,14 +88,11 @@ public class CrearUsuario extends AppCompatActivity {
             return;
         }
 
-        Map<String, Object> appData = new HashMap<>();
-        appData.put("nombreApp", nombreApp);
-        appData.put("nombreUsuario", nombreUsuario);
-        appData.put("correo", correo);  // Agregar el correo
-        appData.put("contraseña", contraseña);  // Agregar la contraseña
+        // Crear un objeto User con el appId generado
+        User nuevoUsuario = new User(appId, nombreApp, nombreUsuario, correo, contraseña);
 
-        // Guardar directamente bajo el nodo raíz "Aplicaciones"
-        databaseReference.child(appId).setValue(appData)
+        // Guardar los datos en Firebase
+        databaseReference.child(appId).setValue(nuevoUsuario)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(CrearUsuario.this, "Aplicación registrada exitosamente", Toast.LENGTH_SHORT).show();
                     limpiarCampos();

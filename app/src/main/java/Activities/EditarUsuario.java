@@ -73,13 +73,7 @@ public class EditarUsuario extends AppCompatActivity {
         String contraseña = txtContraseña.getText().toString().trim();
         String confirmarContraseña = txtConfirmarContraseña.getText().toString().trim();
 
-        Log.d("EditarUsuario", "Datos capturados: " +
-                "nombreApp=" + nombreApp +
-                ", nombreUsuario=" + nombreUsuario +
-                ", correo=" + correo +
-                ", contraseña=" + contraseña +
-                ", confirmarContraseña=" + confirmarContraseña);
-
+        // Validar campos
         if (TextUtils.isEmpty(nombreApp) || TextUtils.isEmpty(nombreUsuario) ||
                 TextUtils.isEmpty(correo) || TextUtils.isEmpty(contraseña) || TextUtils.isEmpty(confirmarContraseña)) {
             Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
@@ -91,19 +85,18 @@ public class EditarUsuario extends AppCompatActivity {
             return;
         }
 
+        // Crear un objeto actualizado basado en la clase User
         User usuarioActualizado = new User(appId, nombreApp, nombreUsuario, correo, contraseña);
-        Log.d("EditarUsuario", "Usuario actualizado: " + usuarioActualizado);
 
+        // Actualizar en Firebase
         databaseReference.child(appId).setValue(usuarioActualizado)
                 .addOnSuccessListener(aVoid -> {
-                    Log.d("EditarUsuario", "Usuario actualizado correctamente en Firebase.");
                     Toast.makeText(EditarUsuario.this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
-                    finish();
+                    finish(); // Cierra la actividad actual
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("EditarUsuario", "Error al actualizar usuario: ", e);
                     Toast.makeText(EditarUsuario.this, "Error al actualizar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("EditarUsuario", "Error al actualizar: ", e);
                 });
     }
-
 }
