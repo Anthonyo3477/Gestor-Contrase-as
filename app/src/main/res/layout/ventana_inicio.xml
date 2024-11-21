@@ -13,36 +13,51 @@
         android:orientation="vertical"
         android:padding="16dp"
         android:gravity="center"
-        android:background="#FFFFFF">
+        android:background="?attr/colorSurface">
 
-        <!-- Título en la parte superior -->
-        <TextView
+        <!-- Icono del candado -->
+        <ImageView
+            android:id="@+id/imgCandado"
+            android:layout_width="232dp"
+            android:layout_height="258dp"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="Logo"
+            android:src="@drawable/Logo" />
+
+        <!-- Título con Material Design -->
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="welcooooooommmmm"
-            android:textSize="32sp"
-            android:textColor="#000000"
+            android:text="¡Bienvenido a VerdugoPass"
+            android:textSize="30sp"
+            android:textColor="?attr/colorOnSurface"
             android:layout_gravity="top|center_horizontal"
-            android:paddingBottom="50dp"/>
+            android:paddingBottom="50dp" />
 
-        <!-- Botón de "Ingresar" centrado -->
-        <Button
-            android:id="@+id/btnIngresar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ingresar"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"/>
+        <!-- Botón de "Ingresar" con Material Design -->
+        <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnIngresar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingresar"
+        android:textSize="18sp"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_marginTop="20dp"
+        app:cornerRadius="8dp"
+        app:iconPadding="8dp" />
 
-        <!-- Botón de "Crear Sesión" centrado debajo del otro botón -->
-        <Button
-            android:id="@+id/btnCrearSesion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Crear Sesión"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"/>
+        <!-- Botón de "Crear Sesión" con Material Design -->
+        <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCrearSesion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crear Sesión"
+        android:textSize="18sp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_marginTop="20dp"
+        app:cornerRadius="8dp"
+        app:iconPadding="8dp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:com="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
@@ -16,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Título de registro -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,8 +28,7 @@
             android:layout_gravity="center"/>
 
         <!-- Texto y campo para el nombre de la aplicación o sitio web -->
-
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/LabelNombreSitio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,19 +38,24 @@
             android:textColor="#333333"
             android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/txtNombreSitio"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtNombreSitioLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ingrese el nombre de la aplicación o sitio web"
-            android:layout_marginTop="5px"
-            android:inputType="text"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            android:backgroundTint="#CCCCCC"/>
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtNombreSitio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese el nombre de la aplicación o sitio web"
+                android:inputType="text"
+                android:layout_marginTop="5px"
+                android:layout_marginBottom="16dp"
+                android:padding="8dp"
+                android:backgroundTint="#CCCCCC"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Texto y campo para el nombre de usuario -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/LabelNombreUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,19 +65,24 @@
             android:textColor="#333333"
             android:layout_marginBottom="8dp"/>
 
-        <EditText
-            android:id="@+id/txtNombreUsuario"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtNombreUsuarioLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ingrese su nombre de usuario"
-            android:layout_marginTop="5px"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            android:backgroundTint="#CCCCCC"/>
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtNombreUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese su nombre de usuario"
+                android:inputType="textPersonName"
+                android:layout_marginTop="5px"
+                android:layout_marginBottom="16dp"
+                android:padding="8dp"
+                android:backgroundTint="#CCCCCC"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Texto y campo para el correo electrónico -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/LabelCorreo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,19 +92,24 @@
             android:textColor="#333333"
             android:layout_marginBottom="8dp"/>
 
-        <EditText
-            android:id="@+id/txtCorreo"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtCorreoLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ingrese su correo"
-            android:layout_marginTop="5px"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            android:backgroundTint="#CCCCCC"/>
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese su correo"
+                android:inputType="textEmailAddress"
+                android:layout_marginTop="5px"
+                android:layout_marginBottom="16dp"
+                android:padding="8dp"
+                android:backgroundTint="#CCCCCC"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Texto y campo para la contraseña -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/LabelContrasena"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,19 +119,24 @@
             android:textColor="#333333"
             android:layout_marginBottom="8dp"/>
 
-        <EditText
-            android:id="@+id/txtContraseña"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtContraseñaLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ingrese su contraseña"
-            android:layout_marginTop="5px"
-            android:inputType="textPassword"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            android:backgroundTint="#CCCCCC"/>
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtContraseña"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese su contraseña"
+                android:layout_marginTop="5px"
+                android:inputType="textPassword"
+                android:layout_marginBottom="16dp"
+                android:padding="8dp"
+                android:backgroundTint="#CCCCCC"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Texto y campo para confirmar la contraseña -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/LabelConfirmarContraseña"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,19 +146,24 @@
             android:textColor="#333333"
             android:layout_marginBottom="8dp"/>
 
-        <EditText
-            android:id="@+id/txtConfirmarContraseña"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtConfirmarContraseñaLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Confirme su contraseña"
-            android:layout_marginTop="5px"
-            android:inputType="textPassword"
-            android:layout_marginBottom="24dp"
-            android:padding="8dp"
-            android:backgroundTint="#CCCCCC"/>
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtConfirmarContraseña"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirme su contraseña"
+                android:layout_marginTop="5px"
+                android:inputType="textPassword"
+                android:layout_marginBottom="24dp"
+                android:padding="8dp"
+                android:backgroundTint="#CCCCCC"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Botón de registro -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCrearAppWeb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -150,7 +175,7 @@
             android:padding="12dp"/>
 
         <!-- Botón de volver -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnVolver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

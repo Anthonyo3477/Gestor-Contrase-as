@@ -26,7 +26,7 @@ import adapters.UsuarioAdapter;
 
 public class MenuUsuario extends AppCompatActivity {
 
-    private Button btnCrearUsuario;
+    private Button btnCrearUsuario, btnVolver;
     private RecyclerView recyclerView;
     private UsuarioAdapter usuarioAdapter;
     private List<User> listaUsuarios = new ArrayList<>();
@@ -40,6 +40,7 @@ public class MenuUsuario extends AppCompatActivity {
 
         // Inicializar elementos de la vista
         btnCrearUsuario = findViewById(R.id.CrearAplicacion);
+        btnVolver = findViewById(R.id.btnVolver); // Inicializar el botón "Volver"
         recyclerView = findViewById(R.id.recyclerViewUsuarios);
 
         // Configurar RecyclerView
@@ -53,12 +54,20 @@ public class MenuUsuario extends AppCompatActivity {
         // Cargar datos de Firebase
         cargarDatosUsuario();
 
-        // Configurar botón Crear Usuario
+        // Configurar botón "Crear Usuario"
         btnCrearUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuUsuario.this, CrearUsuario.class);
                 startActivity(intent);
+            }
+        });
+
+        // Configurar botón "Volver"
+        btnVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish(); // Cierra la actividad actual y vuelve a la anterior
             }
         });
     }
